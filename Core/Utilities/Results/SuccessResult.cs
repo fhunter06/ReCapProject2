@@ -10,11 +10,9 @@ namespace Core.Utilities.Results
         {
 
         }
-
-        public SuccessResult(bool v) :base(true)
+        public SuccessResult(): base(true)
         {
 
         }
-               
     }
 }
