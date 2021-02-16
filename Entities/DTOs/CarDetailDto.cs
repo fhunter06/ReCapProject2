@@ -7,7 +7,7 @@ namespace Entities.DTOs
 {
     public class CarDetailDto: IDto
     {
-     
+        public DateTime ReturnDate;
 
         public int CarId { get; set; }
         public string CarName { get; set; }

@@ -11,7 +11,7 @@ namespace Business.Constants
         public static string CarNameDeleted = "Araç Silindi;";
         public static string CarNameUpdated = "Araç ismi güncellendi";
         public static string CarsListed = "Araçlar Listelendi";
-        public static object CustomerAdded="Müşteri Eklendi";
+       
         public static string MaintenanceTime = "Site Bakimda";
         public static string CarsListedByDailyPrice = "Arabalar istenen Günlük  kiralama fiyat araligina göre listelendi";
 
@@ -46,7 +46,10 @@ namespace Business.Constants
         public static string CustomerDeleted = "Müsteri silindi";
 
         public static string CustomerUpdated = "Müsteri güncellendi";
-        
-
+        public static string RentalDeleted = "Araç kiradan Döndü";
+        public static string ReturnetRental = "Araç Yeniden Kiralandı";
+        public static string UpdatedRental="Kiralık Araç Güncellendi";
+        public static string CustomerAdded="Müşteri Eklendi";
+        public static string CustomersListed="Müşteriler Listelendi" ;
     }
 }

@@ -7,6 +7,7 @@ using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Concrete
@@ -18,54 +19,45 @@ namespace Business.Concrete
         {
             _rentalsDal = rentalsDal;
         }
-        public IResult Add(Rentals rental)
+
+        public IResult Add(Rentals rentals)
         {
-            var result = CheckReturnDate(rental.CarId);
-            if (!result.Success)
-            {
-                return new ErrorResult(result.Message);
-            }
-            _rentalsDal.Add(rental);
-            return new SuccessResult(result.Message);
-
-        }
-
-        public IResult CheckReturnDate(int carId)
-        {
-            var resutl = _rentalsDal.GetRentalDetails(x => x.CarId == carId);
-            //  if (result.Count > 0 && result.Count(x => x.ReturnDate == null) > 0)
-            //{
-            //    return new ErrorResult(Messages.RentalAddedError);
-            //}
-            //return new SuccessResult(Messages.RentalAdded);
-
-            if (resutl.Count> 0 && resutl.Count(x => x.ReturnDate > DateTime.Now)>0)
+            if (rentals.ReturnDate == null && _rentalsDal.GetCarDetails(I =>I.CarId == rentals.CarId).Count > 0)
             {
                 return new ErrorResult(Messages.RentalAddedError);
             }
-
+            _rentalsDal.Add(rentals);
             return new SuccessResult(Messages.RentalAdded);
+        }
+
+        public IResult Delete(Rentals rentals)
+        {
+            _rentalsDal.Delete(rentals);
+            return new SuccessResult(Messages.RentalDeleted);
         }
 
         public IDataResult<List<Rentals>> GetAll()
         {
             return new SuccessDataResult<List<Rentals>>(_rentalsDal.GetAll());
+            
         }
 
-        public IDataResult<List<CarDetailDto>> GetRentalDetailsDto(int carId)
+        public IDataResult<Rentals> GetById(int id)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_rentalsDal.GetRentalDetails(x => x.CarId = carId));
+            
+            return new SuccessDataResult<Rentals>(_rentalsDal.Get(I => I.Id == id));
         }
 
-        public IResult UpdateReturnDate(int carId)
+        public IDataResult<List<RentalsDetailDto>> GetRentalDetails(Expression<Func<Rentals, bool>> filter = null)
         {
-            var result = _rentalsDal.GetAll();
-            var updatedRentals = result.LastOrDefault();
-            if (updatedRentals.ReturnDate!=null)
-            {
-                return new ErrorResult();
-            }
-            return new SuccessResult();
+            return new SuccessDataResult<List<RentalsDetailDto>>(_rentalsDal.GetCarDetails(filter), Messages.ReturnetRental);
+        }
+
+        public IResult Update(Rentals rentals)
+        {
+            _rentalsDal.Update(rentals);
+            return new SuccessResult(Messages.UpdatedRental);
         }
     }
+       
 }

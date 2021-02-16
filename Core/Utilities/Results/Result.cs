@@ -6,7 +6,7 @@ namespace Core.Utilities.Results
 {
     public class Result : IResult
     {
-        private string carNameDeleted;
+        
 
         public Result(bool success, string message):this (success)
         {
@@ -17,11 +17,7 @@ namespace Core.Utilities.Results
             Success = success;
         }
 
-        public Result(string carNameDeleted)
-        {
-            this.carNameDeleted = carNameDeleted;
-        }
-
+       
         public bool Success { get; }
 
         public string Message { get; }
